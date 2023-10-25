@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Budjai</title>
+    <link rel="stylesheet" href="/static/index_styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <title>Login Page</title>
 </head>
 <body>
-    <div style="width: 100%; height: 100%; position: relative; background: #EFFCFF">
-        <div style="width: 430px; height: 932px; left: 0px; top: 0px; position: absolute; background: #CEF6FF"></div>
-        <div style="width: 771px; height: 218px; left: -352px; top: 747px; position: absolute; background: #0081D9; box-shadow: 300px 300px 300px; border-radius: 9999px; filter: blur(300px)"></div>
-        <div style="width: 227px; height: 183px; left: 231px; top: -73px; position: absolute; background: #0097FF; box-shadow: 250px 250px 250px; border-radius: 9999px; filter: blur(250px)"></div>
-        <img style="width: 409px; height: 409px; left: 10px; top: 262px; position: absolute" src="/static/61d5d4d93b8d8b87259496895fe448e4.png" />
+    <a href="{{ url_for('login') }}">
+        <div class="logo-container">
+            <img src="/static/61d5d4d93b8d8b87259496895fe448e4.png" id="logo">
+        </div>
+    </a>
+    <div class="text-container">
+        <p id="text">TAP OR CLICK LOGO TO CONTINUE</p>
     </div>
 </body>
 </html>

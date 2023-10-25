@@ -1,1 +1,44 @@
-<h1>Test naja</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/register_style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <title>Register Page</title>
+</head>
+<body>
+</div>
+    <h1 id="regis">Registration</h1>
+    <p id="des-regis">Enter your gmail and Password</p>
+    <div class="container">
+    <div class="name-text">Username</div>
+    <div class="inp-name">
+        <input id="name" placeholder="Enter your Username" required>
+    </div>
+    </div>
+    <div class="container">
+    <div class="name-text">Email</div>
+    <div class="inp-name">
+        <input id="name" placeholder="Enter your Email" type="email" required>
+    </div>
+    </div>
+    <div class="container">
+        <div class="name-text">Password</div>
+        <div class="inp-name">
+            <input id="name" placeholder="Enter your password" type="password">
+        </div>
+        </div>
+        <div class="container">
+            <div class="name-text">Confirm Password</div>
+            <div class="inp-name">
+                <input id="name" placeholder="Re enter your password" type="password">
+            </div>
+            </div>
+    <div class="container-button">
+    <a href="{{ url_for('home') }}"><button type="button">CONFIRM REGISTER</button></a>
+    </div>
+</body>
+</html>
