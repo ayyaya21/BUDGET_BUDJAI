@@ -13,26 +13,25 @@
     <div class="login-pic">
         <img src="/static/Group 266.png">
     </div>
-        <h1 id="login">Login</h1>
-        <p id="des-login">Set a name for your profile, here's 
-            the password</p>
-    <div class="container">
-        <div class="name-text">Username</div>
-        <div class="inp-name">
-            <input id="name" placeholder="Enter your Username">
-        </div>
-    </div>
-    <div class="container">
-        <div class="name-text">Password</div>
-        <div class="inp-name">
-            <input id="name" placeholder="Enter your password" type="password">
-        </div>
-    </div>
-    <div class="container-button">
-        <a href="{{ url_for('home') }}"><button type="button">LOGIN</button></a>
-    </div>
-    <div class="register">
-        <p id="register">Don't have an account &emsp;<a href="{{ url_for('register') }}">Sign Up</a></p>
-    </div>
+    <h1 id="login">Login</h1>
+    <p id="des-login">Set a name for your profile, here's
+        the password</p>
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="container">
+                <div class="name-text">Email</div>
+                <div class="inp-name">
+                    <input name="email" placeholder="Enter your Email" type="email">
+                </div>
+            </div>
+            <div class="container">
+                <div class="name-text">Password</div>
+                <div class="inp-name">
+                    <input name="password" placeholder="Enter your password" type="password">
+                </div>
+            </div>
+            <div class="container-button">
+                <button type="submit">LOGIN</button>
+            </div>
+        </form>
 </body>
 </html>
