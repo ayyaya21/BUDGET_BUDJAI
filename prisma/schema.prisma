@@ -1,0 +1,24 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DB_URL")
+}
+
+generator client {
+    provider  = "prisma-client-py"
+    interface = "asyncio"
+}
+
+model Member {
+    id        Int         @id @default(autoincrement())
+    username  String
+    email     String
+    password  String
+    balance   Float       @default(0.00)
+    role      MemberRoles @default(MEMBER)
+    createdAt DateTime    @default(now())
+}
+
+enum MemberRoles {
+    ADMIN
+    MEMBER
+}
