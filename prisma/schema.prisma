@@ -8,17 +8,20 @@ generator client {
     interface = "asyncio"
 }
 
-model Member {
-    id        Int         @id @default(autoincrement())
-    username  String
-    email     String
-    password  String
-    balance   Float       @default(0.00)
-    role      MemberRoles @default(MEMBER)
-    createdAt DateTime    @default(now())
+model Budget {
+    id      Int   @id @default(autoincrement())
+    balance Float
 }
 
-enum MemberRoles {
-    ADMIN
-    MEMBER
+model Transaction {
+    id        Int             @id @default(autoincrement())
+    name      String
+    money     Float
+    type      TransactionType
+    createdAt DateTime        @default(now())
+}
+
+enum TransactionType {
+    EXPENSE
+    INCOME
 }

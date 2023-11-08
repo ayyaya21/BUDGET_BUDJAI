@@ -1,0 +1,25 @@
+body {
+    background-color: #CEF6FF;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.logo-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5% 0;
+}
+
+#logo {
+    height: 500px;
+    width: auto;
+}
+
+#text {
+    color: black;
+    opacity: 0.4;
+    text-align: center;
+    text-decoration: none;
+}

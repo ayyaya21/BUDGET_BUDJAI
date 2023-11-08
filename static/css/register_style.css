@@ -1,0 +1,65 @@
+* {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+body {
+    background-color: #CEF6FF;
+}
+
+#regis {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 45px;
+}
+
+#des-regis {
+    text-align: center;
+    font-size: 14px;
+    color: #727E96;
+}
+
+.container {
+    border: 0.5px solid black;
+    border-radius: 10px;
+    width: 502px;
+    height: 4em;
+    opacity: 0.4;
+    margin: 60px auto;
+}
+
+.name-text {
+    position: absolute;
+    margin: -25px 0 0 10px;
+    border-radius: 10px;
+    padding: 2px 10px;
+    font-size: 14px;
+}
+
+#name {
+    width: 480px;
+    height: 4.5em;
+    background-color: transparent;
+    border: 0;
+    padding: 0 10px;
+    outline: none;
+}
+
+.container-button button {
+    width: 500px;
+    height: 4.5em;
+    background-color: #011A51;
+    border: 0;
+    border-radius: 6px;
+    color: white;
+}
+
+.container-button button:hover {
+    background-color: #0034a5;
+}
+
+.container-button {
+    border-radius: 6px;
+    width: 500px;
+    height: 4em;
+    margin: 90px auto 40px auto;
+}

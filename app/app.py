@@ -1,8 +1,11 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Form, Cookie
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-# from .routers import members
+from typing import Annotated
+from .dtos.task import CreateTransactionDto
 from .prisma import prisma
+import datetime
+import calendar
 
 app = FastAPI()
 # app.include_router(members.router)
@@ -10,11 +13,13 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 @app.get('/')
-async def index(request:Request):
-    # At a minimum, you must pass the request in the context
+async def index(request:Request, login: Annotated[bool | None, Cookie()] = None):
     context = {"request":request}
-    return templates.TemplateResponse('index.html', context)
-
+    if login:
+        return templates.TemplateResponse('sucessfully_login.html', context)
+    else:
+        return templates.TemplateResponse('index.html', context)
+    
 @app.get('/login')
 async def login(request:Request):
     context = {"request":request}
@@ -22,10 +27,50 @@ async def login(request:Request):
 
 @app.post("/submit")
 async def submit_form(request: Request, username: str = Form(...), password: str = Form(...)):
-    await prisma.member.create(data={'username': username, 'password': password, "email": 'eadfasd'})
-    res = await prisma.member.find_many()
     context = {"request":request}
-    return templates.TemplateResponse('submit.html', context)
+    if username == 'test' and password == 'password':
+        return templates.TemplateResponse('submit.html', context)
+    else:
+       return templates.TemplateResponse('error.html', context)
+
+#คำนวณทั้งหมด
+@app.get('/transaction')
+async def get_balance():
+    result = await prisma.transaction.find_many()
+    expense = await prisma.transaction.find_many(where={'type': "EXPENSE"})
+    expense_total = 0
+    for i in expense:
+        expense_total += i.money
+    income = await prisma.transaction.find_many(where={'type': "INCOME"})
+    income_total = 0
+
+    for i in income:
+        income_total += i.money
+    balance_money = income_total - expense_total
+
+    current_date = datetime.datetime.now()
+    current_year = current_date.year
+    current_month = current_date.month
+    num_days = calendar.monthrange(current_year, current_month)[1]
+    days_in_month = [day for day in range(1, num_days + 1)][-1]
+    daily = balance_money // days_in_month
+    return {
+        "items": result,
+        "income": income_total,
+        "expense": expense_total,
+        "balance": balance_money,
+        "daily": daily
+    }
+
+@app.post('/transaction')
+async def create_transaction(taskdto: CreateTransactionDto):
+    await prisma.transaction.create(data={'name': taskdto.name, 'money': float(taskdto.money), 'type': taskdto.type})
+    return await prisma.transaction.find_many()
+
+@app.put('/transaction/{id}')
+async def update_transaction(id: int, taskdto: CreateTransactionDto):
+    await prisma.transaction.update(where={'id': int(id)}, data={'name': taskdto.name, 'money': float(taskdto.money), 'type': taskdto.type})
+    return await prisma.transaction.find_many()
 
 @app.get('/register')
 async def regis(request:Request):
