@@ -8,7 +8,7 @@ import datetime
 import calendar
 
 app = FastAPI()
-# app.include_router(members.router)
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
@@ -34,8 +34,8 @@ async def submit_form(request: Request, username: str = Form(...), password: str
        return templates.TemplateResponse('error.html', context)
 
 #คำนวณทั้งหมด
-@app.get('/transaction')
-async def get_balance():
+@app.get('/home')
+async def calculate():
     result = await prisma.transaction.find_many()
     expense = await prisma.transaction.find_many(where={'type': "EXPENSE"})
     expense_total = 0
@@ -62,20 +62,20 @@ async def get_balance():
         "daily": daily
     }
 
-@app.post('/transaction')
+@app.post('/home')
 async def create_transaction(taskdto: CreateTransactionDto):
     await prisma.transaction.create(data={'name': taskdto.name, 'money': float(taskdto.money), 'type': taskdto.type})
     return await prisma.transaction.find_many()
 
-@app.put('/transaction/{id}')
+@app.put('/home/{id}')
 async def update_transaction(id: int, taskdto: CreateTransactionDto):
     await prisma.transaction.update(where={'id': int(id)}, data={'name': taskdto.name, 'money': float(taskdto.money), 'type': taskdto.type})
     return await prisma.transaction.find_many()
 
-@app.get('/register')
-async def regis(request:Request):
-    context = {"request":request}
-    return templates.TemplateResponse('register.html', context)
+@app.delete('/home{id}')
+async def delete_transaction(id: int, taskdto: CreateTransactionDto):
+    await prisma.transaction.delete(where={'id': int(id)}, data={'name': taskdto.name, 'money': float(taskdto.money), 'type': taskdto.type})
+    return await prisma.transaction.find_many()
 
 @app.on_event("startup")
 async def startup():
