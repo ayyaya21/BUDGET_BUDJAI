@@ -8,6 +8,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
     <title>Login Page</title>
+    <script>
+        function check(){
+            const username = document.getElementById('username').value
+            const password = document.getElementById('password').value
+            if (username == 'test' && password == 'password'){
+                document.cookie = 'login=True'
+                window.location.href = "http://localhost:3000/home";
+            }else{
+                alert('Username or Password wrong')
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="login-pic">
@@ -20,15 +32,15 @@
     <div class="container">
         <div class="name-text">Username</div>
         <div class="inp-name">
-            <input id="name" placeholder="Enter your Username">
+            <input id="username" placeholder="Enter your Username">
         </div>
     </div>
     <div class="container">
         <div class="name-text">Password</div>
         <div class="inp-name">
-            <input id="name" placeholder="Enter your password" type="password">
+            <input id="password" placeholder="Enter your password" type="password">
         </div>
     </div>
     <div class="container-button">
-        <a href="sucessfully_login.html"><button type="button">LOGIN</button></a>
+        <button onclick="check()" type="button">LOGIN</button>
     </div>
