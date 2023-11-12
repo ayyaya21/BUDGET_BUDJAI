@@ -18,10 +18,27 @@ model Transaction {
     name      String
     money     Float
     type      TransactionType
+    use_type  InOutType
     createdAt DateTime        @default(now())
 }
 
 enum TransactionType {
-    EXPENSE
-    INCOME
+    Expense
+    Income
+}
+
+enum InOutType {
+    Food
+    Beverage
+    Transportation
+    Social
+    Fashion
+    Communication
+    Education
+    Rent
+    Tax
+    Others
+    Monthly
+    Weekly
+    Earned
 }

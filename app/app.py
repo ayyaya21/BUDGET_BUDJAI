@@ -38,11 +38,11 @@ async def submit_form(request: Request, username: str = Form(...), password: str
 @app.get('/home')
 async def submit(request:Request, login: Annotated[bool | None, Cookie()] = None):
     transaction = await prisma.transaction.find_many()
-    expense = await prisma.transaction.find_many(where={'type': "EXPENSE"})
+    expense = await prisma.transaction.find_many(where={'type': "Expense"})
     expense_total = 0
     for i in expense:
         expense_total += i.money
-    income = await prisma.transaction.find_many(where={'type': "INCOME"})
+    income = await prisma.transaction.find_many(where={'type': "Income"})
     income_total = 0
 
     for i in income:
@@ -66,43 +66,9 @@ async def submit(request:Request, login: Annotated[bool | None, Cookie()] = None
     else:
         return templates.TemplateResponse('error.html', context)
 
-#คำนวณทั้งหมด
-@app.get('/home')
-async def calculate():
-    result = await prisma.transaction.find_many()
-    expense = await prisma.transaction.find_many(where={'type': "EXPENSE"})
-    expense_total = 0
-    for i in expense:
-        expense_total += i.money
-    income = await prisma.transaction.find_many(where={'type': "INCOME"})
-    income_total = 0
-
-    for i in income:
-        income_total += i.money
-    balance_money = income_total - expense_total
-
-    current_date = datetime.datetime.now()
-    current_year = current_date.year
-    current_month = current_date.month
-    num_days = calendar.monthrange(current_year, current_month)[1]
-    days_in_month = [day for day in range(1, num_days + 1)][-1]
-    daily = balance_money // days_in_month
-    return {
-        "items": result,
-        "income": income_total,
-        "expense": expense_total,
-        "balance": balance_money,
-        "daily": daily
-    }
-
-@app.get('/',response_class=HTMLResponse)
-async def read_items(request:Request):
-    items = ['items', 'income', 'expense', 'balance', 'daily']
-    return templates.TemplateResponse('home.html', {'request':request,'items':items})
-
 @app.post('/home')
 async def create_transaction(taskdto: CreateTransactionDto):
-    await prisma.transaction.create(data={'name': taskdto.name, 'money': float(taskdto.money), 'type': taskdto.type})
+    await prisma.transaction.create(data={'name': taskdto.name, 'money': float(taskdto.money), 'type': taskdto.type, 'use_type': taskdto.use_type})
     return await prisma.transaction.find_many()
 
 @app.delete('/home')
