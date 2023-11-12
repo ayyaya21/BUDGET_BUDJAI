@@ -5,6 +5,8 @@ from fastapi.responses import HTMLResponse
 from typing import Annotated
 from .dtos.task import CreateTransactionDto
 from .prisma import prisma
+import matplotlib.pyplot as plt
+from io import BytesIO
 import datetime
 import calendar
 
@@ -36,35 +38,37 @@ async def submit_form(request: Request, username: str = Form(...), password: str
        return templates.TemplateResponse('error.html', context)
 
 @app.get('/home')
-async def submit(request:Request, login: Annotated[bool | None, Cookie()] = None):
+async def submit(request: Request, login: Annotated[bool | None, Cookie()] = None):
     transaction = await prisma.transaction.find_many()
     expense = await prisma.transaction.find_many(where={'type': "Expense"})
-    expense_total = 0
-    for i in expense:
-        expense_total += i.money
     income = await prisma.transaction.find_many(where={'type': "Income"})
-    income_total = 0
 
-    for i in income:
-        income_total += i.money
+    expense_total = sum(i.money for i in expense)
+    income_total = sum(i.money for i in income)
     balance_money = income_total - expense_total
 
     current_date = datetime.datetime.now()
     current_year = current_date.year
     current_month = current_date.month
     num_days = calendar.monthrange(current_year, current_month)[1]
-    days_in_month = [day for day in range(1, num_days + 1)][-1]
-    daily = balance_money // days_in_month
-    context = {'request':request, 'transaction':transaction, 'show':{
-        "income": income_total,
-        "expense": expense_total,
-        "balance": balance_money,
-        "daily": daily
-    }}
+    daily = balance_money // num_days
+
+    context = {
+        'request': request,
+        'transaction': transaction,
+        'show': {
+            "income": income_total,
+            "expense": expense_total,
+            "balance": balance_money,
+            "daily": daily,
+        }
+    }
+
     if login:
         return templates.TemplateResponse('home.html', context)
     else:
         return templates.TemplateResponse('error.html', context)
+
 
 @app.post('/home')
 async def create_transaction(taskdto: CreateTransactionDto):
