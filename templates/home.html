@@ -1,18 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Home</title>
+    <script>
+        const transactionData = fetch('http://localhost:3000/transaction').then(res => res.json()).then(res => {
+            const sums = {}
+            res.forEach(item => {
+                if (sums[item.use_type] === undefined) {
+                    sums[item.use_type] = item.money;
+                } else {
+                    sums[item.use_type] += item.money;
+                }
+            });
+            const ctx = document.getElementById("transactionChart").getContext("2d");
+            new Chart(ctx, {
+                type: "pie",
+                data: {
+                    labels: Object.keys(sums),
+                    datasets: [
+                        {
+                            data: Object.values(sums),
+                            backgroundColor: [
+                                "#ff8644",
+                                "#ffa744",
+                                "#ff87a1",
+                                "#fd62ff",
+                                "#964dff",
+                                "#ac1d1c",
+                                "#ffea12",
+                            ],
+                        },
+                    ],
+                },
+            });
+        });
+
+    </script>
 </head>
+
 <body>
     <p>Total Income: {{ show.income }}</p>
     <p>Total Expense: {{ show.expense }}</p>
     <p>Balance: {{ show.balance }}</p>
     <p>Daily Budget: {{ show.daily }}</p>
-
+    <div style="flex:auto; width: 400px; height: 400px;">
+        <canvas id="transactionChart" width="400" height="400"></canvas>
+    </div>
     {% for t in transaction %}
-        <p>{{ t.name }} - {{ t.money }} - {{ t.type }} - {{ t.use_type }}</p>
+    <p>{{ t.name }} - {{ t.money }} - {{ t.type }} - {{ t.use_type }}</p>
     {% endfor %}
 </body>
+
 </html>

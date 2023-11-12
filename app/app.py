@@ -5,6 +5,8 @@ from fastapi.responses import HTMLResponse
 from typing import Annotated
 from .dtos.task import CreateTransactionDto
 from .prisma import prisma
+import matplotlib.pyplot as plt
+from io import BytesIO
 import datetime
 import calendar
 
@@ -35,12 +37,16 @@ async def submit_form(request: Request, username: str = Form(...), password: str
     else:
        return templates.TemplateResponse('error.html', context)
 
+@app.get('/transaction')
+async def get_transaction():
+    transaction = await prisma.transaction.find_many(where={'type': 'Expense', 'NOT': [{'use_type': 'Weekly'}, {'use_type': 'Monthly'}, {'use_type': 'Earned'}]})
+    return transaction
+
 @app.get('/home')
 async def submit(request: Request, login: Annotated[bool | None, Cookie()] = None):
     transaction = await prisma.transaction.find_many()
     expense = await prisma.transaction.find_many(where={'type': "Expense"})
     income = await prisma.transaction.find_many(where={'type': "Income"})
-
     expense_total = sum(i.money for i in expense)
     income_total = sum(i.money for i in income)
     balance_money = income_total - expense_total
