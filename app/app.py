@@ -5,8 +5,6 @@ from fastapi.responses import HTMLResponse
 from typing import Annotated
 from .dtos.task import CreateTransactionDto
 from .prisma import prisma
-import matplotlib.pyplot as plt
-from io import BytesIO
 import datetime
 import calendar
 
