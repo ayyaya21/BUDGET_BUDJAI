@@ -1,0 +1,94 @@
+* {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+    background-color: #CEF6FF;
+}
+
+.column {
+    flex: 1;
+    padding: 20px;
+}
+
+.column:first-child {
+    border-right: none; /* Remove right border for the first column */
+}
+
+.budget, .list, .static {
+    background-color: white;
+    border-radius: 24px;
+    padding: 0 15px 15px 15px;
+}
+
+.daily {
+    background-color: #EFF2F4;
+    width: 40%;
+    text-align: center;
+    border-radius: 16px;
+}
+
+.expense {
+    background-color: #EFF2F4;
+    width: 40%;
+    text-align: center;
+    margin-left: 15%;
+    border-radius: 16px;
+}
+
+.daily-expense {
+    display: flex;
+}
+
+#daily-text, #expense-text {
+    font-size: 10px;
+}
+
+.list h3 {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.list-item {
+    border-radius: 16px;
+    margin: 0 0 20px 0;
+    background-color: #EFF2F4;
+}
+
+.box {
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.money-box {
+    display: block;
+    padding: 0 20px;
+    margin: 0 auto;
+    float: right;
+}
+
+.input-field {
+    background-color: #EFF2F4;
+    border-radius: 16px;
+    height: 3em;
+}
+
+.input-field #button {
+    display: block;
+    float: right;
+    margin: 10px 10px;
+    border-radius: 16px;
+    background-color: #62fb8d;
+    height: 60%;
+}
+
+#item-name, #item-detail, #howmanybaht, #incomeexpense {
+    display: inline-block;
+    background-color: #EFF2F4;
+    border-radius: 5px;
+    margin: 10px;
+    max-width: 15%;
+}
