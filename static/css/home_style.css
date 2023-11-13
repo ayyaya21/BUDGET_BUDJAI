@@ -90,5 +90,13 @@ body {
     background-color: #EFF2F4;
     border-radius: 5px;
     margin: 10px;
-    max-width: 15%;
+    max-width: 14%;
+}
+
+.budget h3 {
+    padding-top: 8px;
+}
+
+.budget h2 {
+    margin: 5px auto;
 }
