@@ -11,7 +11,7 @@
     <title>Home</title>
     <link rel="stylesheet" href="/static/css/home_style.css">
     <script>
-        const transactionData = fetch('http://localhost:3000/transaction').then(res => res.json()).then(res => {
+        const transactionData = fetch('https://e108-2405-9800-ba10-37d3-3026-9300-e012-fbcc.ngrok-free.app/transaction').then(res => res.json()).then(res => {
             const sums = {}
             res.forEach(item => {
                 if (sums[item.use_type] === undefined) {
@@ -48,7 +48,7 @@
             const money = document.getElementById('amount').value
             const type = document.getElementById('type').value
             const use_type = document.getElementById('use_type').value
-            const creator = fetch('http://localhost:3000/home', {
+            const creator = fetch('https://e108-2405-9800-ba10-37d3-3026-9300-e012-fbcc.ngrok-free.app/home', {
                 headers: {
                     'content-type': 'application/json'
                 },
