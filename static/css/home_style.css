@@ -1,0 +1,147 @@
+* {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.input-field {
+    display: flex;
+    background-color: rgb(224, 218, 218);
+    border-radius: 10px;
+    padding: 8px;
+    height: auto;
+    gap: 10px;
+}
+
+.button-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: x-large;
+    appearance: none;
+    border: none;
+    outline: none;
+    border-bottom: .2em solid #83A2FF;
+    border-radius: .2em .2em 0 0;
+    background: rgba(#83A2FF, .2);
+    background-color: white;
+    border-radius: .2em .2em 0 0;
+    width: 30px;
+    height: 30px;
+    color: #83A2FF;
+}
+
+input[type=text] {
+    display: flex;
+    appearance: none;
+    border: none;
+    outline: none;
+    border-radius: .2em .2em 0 0;
+    border-bottom: .2em solid #83A2FF;
+    background: rgba(#83A2FF, .2);
+    padding: .4em;
+    font-weight: bold;
+    color: #83A2FF;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+    background-color: #CEF6FF;
+}
+
+.column {
+    flex: 1;
+    padding: 20px;
+}
+
+.column:first-child {
+    border-right: none;
+    /* Remove right border for the first column */
+}
+
+.budget,
+.list,
+.static {
+    background-color: white;
+    border-radius: 24px;
+    padding: 0 15px 15px 15px;
+}
+
+.daily {
+    background-color: #EFF2F4;
+    width: 40%;
+    text-align: center;
+    border-radius: 16px;
+}
+
+.expense {
+    background-color: #EFF2F4;
+    width: 40%;
+    text-align: center;
+    margin-left: 15%;
+    border-radius: 16px;
+}
+
+.daily-expense {
+    display: flex;
+}
+
+#daily-text,
+#expense-text {
+    font-size: 10px;
+}
+
+.list h3 {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.listbox {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    width: 97%;
+    height: auto;
+    background-color: rgb(224, 218, 218);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+.list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.money-box {
+    display: block;
+    padding: 0 20px;
+    margin: 0 auto;
+    float: right;
+}
+
+#item-name,
+#item-detail,
+#howmanybaht,
+#incomeexpense {
+    display: inline-block;
+    background-color: #EFF2F4;
+    border-radius: 5px;
+    margin: 10px;
+    max-width: 14%;
+}
+
+.budget h3 {
+    padding-top: 8px;
+}
+
+.budget h2 {
+    margin: 5px auto;
+}

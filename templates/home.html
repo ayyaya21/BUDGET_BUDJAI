@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Budjai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Home</title>
+    <link rel="stylesheet" href="/static/css/home_style.css">
     <script>
         const transactionData = fetch('http://localhost:3000/transaction').then(res => res.json()).then(res => {
             const sums = {}
@@ -39,20 +43,90 @@
             });
         });
 
+        const addValue = async () => {
+            const name = document.getElementById('name').value
+            const money = document.getElementById('amount').value
+            const type = document.getElementById('type').value
+            const use_type = document.getElementById('use_type').value
+            const creator = fetch('http://localhost:3000/home', {
+                headers: {
+                    'content-type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    name,
+                    money: Number(money),
+                    type,
+                    use_type
+                })
+            }).then(res => res.json()).then(res => {
+                window.location.reload()
+            })
+        }
+
     </script>
 </head>
 
 <body>
-    <p>Total Income: {{ show.income }}</p>
-    <p>Total Expense: {{ show.expense }}</p>
-    <p>Balance: {{ show.balance }}</p>
-    <p>Daily Budget: {{ show.daily }}</p>
-    <div style="flex:auto; width: 400px; height: 400px;">
-        <canvas id="transactionChart" width="400" height="400"></canvas>
+
+    <div class="column">
+        <div class="budget">
+            <h3 style="padding-top: 2rem;">Budget</h3>
+            <h2 style="font-size: large;font-weight: bold;">{{ show.balance }} Baht</h2>
+            <hr>
+            <div class="daily-expense">
+                <div class="daily">
+                    <p style="color: #FF7272; font-weight: bold;">{{ show.daily }}</p>
+                    <p id="daily-text">Daily</p>
+                </div>
+                <div class="expense">
+                    <p style="color: #FF7272; font-weight: bold;">{{ show.expense }}</p>
+                    <p id="expense-text">Expense</p>
+                </div>
+            </div>
+        </div><br>
+        <div class="list">
+            <h3>List</h3>
+            <div class="input-field">
+                <div class="text"><input type="text" placeholder="name" id="name" /></div>
+                <div class="text"><input type="text" placeholder="amount" id="amount" /></div>
+                <div class="text"><input type="text" placeholder="type" id="type" /></div>
+                <div class="text"><input type="text" placeholder="etc" id="use_type" /></div>
+                <a class="button-field" onclick="addValue()">+</a>
+            </div>
+            <br>
+            {% for t in transaction %}
+            <div class="listbox">
+                <div class="list-item" style="font-weight: 500;">{{ t.name }} - {{ t.money }}</div>
+                <div class="list-item"
+                    style="background-color: rgb(226, 69, 69); padding: 10px; border-radius: 10px; color: white;">{{
+                    t.use_type }}</div>
+                {% if t.type == 'Expense' %}
+                <div class="list-item"
+                    style="background-color: orange; padding: 10px; border-radius: 10px;color: white;">{{ t.type
+                    }}
+                </div>
+                {% else %}
+                <div class="list-item"
+                    style="background-color: green; padding: 10px; border-radius: 10px;color: white;">{{ t.type }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    {% for t in transaction %}
-    <p>{{ t.name }} - {{ t.money }} - {{ t.type }} - {{ t.use_type }}</p>
-    {% endfor %}
+    <div class="column" style="margin-top: 18px;">
+        <div class="static" style="padding: 20px;">
+            <h2 style="display: flex; align-items: center;">Statistic</h2>
+            <p style="font-size: 1.2rem;">Budget</p>
+            <p style="font-size: 20px; margin: 10px 0;">{{ show.balance }}</p>
+            <div class="static" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <div style="display: flex; justify-content: center;">
+                    <canvas id="transactionChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
