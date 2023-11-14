@@ -1,4 +1,5 @@
 uvicorn==0.14.0
-prisma==5.4.2
+prisma
 fastapi==0.68.0
 matplotlib==3.4.3
+pip --upgrade
